@@ -1,0 +1,34 @@
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<link rel="stylesheet" th:href="@{/css/test.css}">
+<style>
+.error {
+		color: red;
+}
+</style>
+<title> Student Registration LGN001 </title>
+</head>
+<body class="login-page-body"> 
+  
+    <div class="login-page">
+      <div class="form">
+        <div class="login">
+          <div class="login-header">
+            <h1>Welcome!</h1>
+           
+            <!-- <p>Please check your data again.</p> -->
+          </div>
+        </div>
+        <form class="login-form" action="/login" method="post" name="confirm" th:object="${userBean}">
+          <div class="error" th:text="${error}"></div>
+          <input type="text" th:field="*{email}" placeholder="Username" required="required"/>
+          <input type="password" placeholder="Password" th:field="*{password}" required="required"/>
+          <button type="submit">login</button>
+        </form>
+      </div>
+    </div>
+</body>
+
+</html>
