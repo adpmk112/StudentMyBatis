@@ -86,11 +86,11 @@
         </thead>
         <tbody>
           <tr th:each="data: ${searchedStudentDto}">
-            <td th:text="${data.studentId}" />
-            <td th:text="${data.studentName}"/>
-            <td th:text="${data.courseName}"/>
+            <td th:text="${data.student_id}" />
+            <td th:text="${data.student_name}"/>
+            <td th:text="${data.course_name}"/>
             <td>
-              <a th:href="@{/fetchStudentView/{fetchId}(fetchId = ${data.studentId})}"><button type="button" class="btn btn-secondary mb-2">See More</button></a> 
+              <a th:href="@{/fetchStudentView/{fetchId}(fetchId = ${data.student_id})}"><button type="button" class="btn btn-secondary mb-2">See More</button></a> 
             </td>          
           </tr>
         </tbody>

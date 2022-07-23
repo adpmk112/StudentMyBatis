@@ -9,6 +9,6 @@ public class CourseBean implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	int id;
+	int course_id;
 	String name;
 }

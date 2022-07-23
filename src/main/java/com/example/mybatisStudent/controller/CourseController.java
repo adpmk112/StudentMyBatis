@@ -32,7 +32,7 @@ public class CourseController {
 	public ModelAndView courseView(Model model) {
 		CourseBean courseBean = new CourseBean();
 		responseCourseDto = courseDao.selectLastRow();
-		courseBean.setId(responseCourseDto.getId()+1);
+		courseBean.setCourse_id(responseCourseDto.getCourse_id()+1);
 		return new ModelAndView("courseRegister","courseBean",courseBean);
 	}
 	

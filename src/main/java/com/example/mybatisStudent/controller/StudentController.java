@@ -54,9 +54,9 @@ public class StudentController {
 			model.addAttribute("courseList", courseList);
 			
 			responseStudentDto = studentDao.selectLastRow();
-			studId = responseStudentDto.getId()+1;
+			studId = responseStudentDto.getStudent_id()+1;
 			StudentBean studentBean = new StudentBean();
-			studentBean.setId(studId);
+			studentBean.setStudent_id(studId);
 			model.addAttribute("studId", "STU-"+studId);
 			model.addAttribute("studentBean",studentBean);
 			return "studentRegister";
@@ -66,8 +66,8 @@ public class StudentController {
 		public String addStudent(StudentBean studentBean,
 													ModelMap model,HttpServletRequest request) {
 			responseStudentDto = studentDao.selectLastRow();
-			studId = responseStudentDto.getId()+1;
-			requestStudentDto.setId(studId);
+			studId = responseStudentDto.getStudent_id()+1;
+			requestStudentDto.setStudent_id(studId);
 			requestStudentDto.setName(studentBean.getName());
 			requestStudentDto.setBirth(studentBean.getBirth());
 			requestStudentDto.setGender(studentBean.getGender());
@@ -75,8 +75,9 @@ public class StudentController {
 			requestStudentDto.setEducation(studentBean.getEducation());
 			studentDao.createStudent(requestStudentDto);
 			for(int i=0;i<studentBean.getAttend().length;i++) {
-				requestCourseDto.setId(Integer.valueOf(studentBean.getAttend()[i]));
-				studentCourseDao.createStudent_course(requestStudentDto, requestCourseDto);
+				requestCourseDto.setCourse_id(Integer.valueOf(studentBean.getAttend()[i]));
+				studentCourseDao.createStudent_course(requestStudentDto.getStudent_id()
+						, requestCourseDto.getCourse_id());
 			}
 			return "redirect:studentView";	
 		}
@@ -84,7 +85,7 @@ public class StudentController {
 		@PostMapping("/studentUpdate")
 		public String updateStudent(@ModelAttribute("studentBean") StudentBean studentBean, 
 				ModelMap model) {
-			requestStudentDto.setId(Integer.valueOf(studentBean.getId()));
+			requestStudentDto.setStudent_id(Integer.valueOf(studentBean.getStudent_id()));
 			requestStudentDto.setName(studentBean.getName());
 			requestStudentDto.setBirth(studentBean.getBirth());
 			requestStudentDto.setGender(studentBean.getGender());
@@ -93,9 +94,10 @@ public class StudentController {
 			studentDao.updateByStudentId(requestStudentDto);
 			
 			for(int i=0;i<studentBean.getAttend().length;i++) {
-				requestCourseDto.setId(Integer.valueOf(studentBean.getAttend()[i]));
+				requestCourseDto.setCourse_id(Integer.valueOf(studentBean.getAttend()[i]));
 				studentCourseDao.deleteStudentCourseByCourseId(requestCourseDto);
-				studentCourseDao.createStudent_course(requestStudentDto, requestCourseDto);
+				studentCourseDao.createStudent_course(requestStudentDto.getStudent_id()
+						, requestCourseDto.getCourse_id());
 			}
 			
 			return "redirect:studentView";	
@@ -103,7 +105,7 @@ public class StudentController {
 		
 		@GetMapping("/deleteStudent/{deleteId}")
 		public String deleteStudent(@PathVariable("deleteId")String deleteId) {
-				requestStudentDto.setId(Integer.valueOf(deleteId));
+				requestStudentDto.setStudent_id(Integer.valueOf(deleteId));
 				studentDao.deleteByStudentId(requestStudentDto);
 				return "redirect:/studentView";
 		}
@@ -117,7 +119,7 @@ public class StudentController {
 		
 		@GetMapping("/fetchStudentView/{fetchId}")
 		public ModelAndView fetchStudent(@PathVariable("fetchId")String fetchId,ModelMap model) {
-			requestStudentCourseDto.setStudentId(Integer.valueOf(fetchId));
+			requestStudentCourseDto.setStudent_id(Integer.valueOf(fetchId));
 			
 			StudentBean studentBean = new StudentBean();
 			List<ResponseStudentCourseDto> responseStudentCourseDtoList =studentCourseDao
@@ -128,8 +130,8 @@ public class StudentController {
 			Iterator<ResponseStudentCourseDto>it = responseStudentCourseDtoList.iterator();
 	    	while(it.hasNext()) {
 	    		 responseStudentCourseDto = it.next();
-	    		studentBean.setId(responseStudentCourseDto.getStudentId());
-	 			studentBean.setName(responseStudentCourseDto.getStudentName());
+	    		studentBean.setStudent_id(responseStudentCourseDto.getStudent_id());
+	 			studentBean.setName(responseStudentCourseDto.getStudent_name());
 	 			studentBean.setBirth(responseStudentCourseDto.getBirth());
 	 			studentBean.setGender(responseStudentCourseDto.getGender());
 	 			studentBean.setPhone(responseStudentCourseDto.getPhone());
@@ -141,7 +143,7 @@ public class StudentController {
 	    	String[]attendCourse = new String[50];
 	    	
 	    	for(int i=0;i<attendCourseList.size();i++) {
-				requestCourseDto.setId(attendCourseList.get(i).getCourseId());
+				requestCourseDto.setCourse_id(attendCourseList.get(i).getCourse_id());
 				attendCourse[i] = courseDao.selectById(requestCourseDto).getName();
 			}
 	    	
@@ -155,7 +157,7 @@ public class StudentController {
 		@GetMapping("/searchStudentId")
 		public String searchUser(@RequestParam("studentId") String id, ModelMap model) {
 			if(id!="") {
-				requestStudentCourseDto.setStudentId(Integer.valueOf(id));
+				requestStudentCourseDto.setStudent_id(Integer.valueOf(id));
 				List<ResponseStudentCourseDto>responseStudentCourseDtoList = 
 						studentCourseDao.selectOneById(requestStudentCourseDto);
 				model.addAttribute("searchedStudentDto", responseStudentCourseDtoList);

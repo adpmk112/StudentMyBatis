@@ -60,9 +60,10 @@
         <h2 class="col-md-6 offset-md-2 mb-5 mt-4">Course Registration</h2>
         <div class="row mb-4">
             <div class="col-md-2"></div>
-            <label th:field="*{id}" class="col-md-2 col-form-label"> ID</label>
+            <label th:field="*{course_id}" class="col-md-2 col-form-label"> ID</label>
             <div class="col-md-4">
-                <input type="text" class="form-control" th:field="*{id}" th:value="${courseBean.id}" readonly>
+                <input type="text" class="form-control" th:field="*{course_id}" th:value="${courseBean.course_id}" 
+                readonly>
             </div>
         </div>
 

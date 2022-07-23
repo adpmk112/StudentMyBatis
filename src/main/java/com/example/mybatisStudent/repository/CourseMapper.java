@@ -1,6 +1,7 @@
 package com.example.mybatisStudent.repository;
 
 import java.util.List;
+
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Options;
@@ -12,14 +13,13 @@ import com.example.mybatisStudent.dto.ResponseCourseDto;
 @Mapper
 public interface CourseMapper {
 	
-	
 	final String create = 
 			"insert into `course` (`name`) values (#{name})";
 	final String selectAll = "SELECT * FROM course";
 	final String selectById = 
-			"SELECT `name` FROM `course` WHERE `id`=#{id}";
+			"SELECT `name` FROM `course` WHERE `course_id`= #{course_id}";
 	final String selectLastRow = 
-			"SELECT `id` FROM `course` ORDER BY `id` DESC LIMIT 1";
+			"SELECT `course_id` FROM `course` ORDER BY `course_id` DESC LIMIT 1";
 	
 	@Insert(create)
 	@Options(useGeneratedKeys = true,keyProperty = "id")

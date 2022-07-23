@@ -65,14 +65,14 @@
             <h2 class="col-md-6 offset-md-2 mb-5 mt-4">Student Registration</h2>
             <div class="row mb-4">
                 <div class="col-md-2"></div>
-                <label th:field="*{id}" class="col-md-2 col-form-label">Student ID</label>
+                <label th:field="*{student_id}" class="col-md-2 col-form-label">Student ID</label>
                 <div class="col-md-4">
-                    <input type="text" class="form-control" th:field="*{id}"  readonly/>
+                    <input type="text" class="form-control" th:field="*{student_id}"  readonly/>
                 </div>
             </div>
             <div class="row mb-4">
                 <div class="col-md-2"></div>
-                <label th:field="stdName" class="col-md-2 col-form-label">Name</label>
+                <label class="col-md-2 col-form-label">Name</label>
                 <div class="col-md-4">
                     <input type="text" class="form-control" id="name" th:field="*{name}" />
                 </div>
@@ -133,7 +133,7 @@
 				<div class="col-md-6 offset-md-4 ms-4">
 				<div th:each="data: ${courseList}" style="display:inline" >
 				<div class="form-check-inline col-md-2">
-					<input class="form-check-input" type="checkbox" th:field="*{attend}"  th:value="${data.id}" > 
+					<input class="form-check-input" type="checkbox" th:field="*{attend}"  th:value="${data.course_id}" > 
 					<span th:text="${data.name}"></span>
 				</div>			
 			

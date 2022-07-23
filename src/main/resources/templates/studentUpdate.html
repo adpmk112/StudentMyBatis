@@ -69,7 +69,7 @@
 						<label for="studentID" class="col-md-2 col-form-label">Student
 							ID</label>
 						<div class="col-md-4">
-							<input type="text" class="form-control" th:field="*{id}"
+							<input type="text" class="form-control" th:field="*{student_id}"
 								readonly="readonly">
 						</div>
 					</div> 
@@ -133,7 +133,7 @@
 							
 			<div th:each="data: ${courseList}" style="display:inline" >
 			<div class="form-check-inline col-md-2">
-			<input class="form-check-input" type="checkbox" th:field="*{attend}" id="gridRadios1" th:value="${data.id}"> 
+			<input class="form-check-input" type="checkbox" th:field="*{attend}" id="gridRadios1" th:value="${data.course_id}"> 
 			<label class="form-check-label" for="gridRadios1"> 
 				<span th:text="${data.name}"></span>
 			</label>
@@ -159,7 +159,7 @@
 								</button>
 							<!-- <a th:href="@{/deleteuser(id=${data.userid})}"> -->
 				
-							<a th:href="@{/deleteStudent/{deleteId}(deleteId=${studentBean.id})}">
+							<a th:href="@{/deleteStudent/{deleteId}(deleteId=${studentBean.student_id})}">
 							<button type="button" class="btn btn-danger"
 								data-bs-toggle="modal" data-bs-target="#exampleModal">
 

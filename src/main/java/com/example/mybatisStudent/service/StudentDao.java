@@ -1,8 +1,5 @@
 package com.example.mybatisStudent.service;
 
-import java.sql.ResultSet;
-
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,59 +7,52 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.example.mybatisStudent.dto.RequestStudentDto;
-import com.example.mybatisStudent.dto.ResponseStudentCourseDto;
 import com.example.mybatisStudent.dto.ResponseStudentDto;
+import com.example.mybatisStudent.repository.StudentMapper;
 
 @Repository
 public class StudentDao {	
 	
-	public void createStudent(RequestStudentDto requestStudentDto) {
-		String sql = "insert into `student` "
-				+ "(`id`,`name`,`birth`,`gender`,`phone`,`education`) "
-				+ "values (?,?,?,?,?,?)";
-		
+	@Autowired
+	StudentMapper studentMapper;
 	
+	public void createStudent(RequestStudentDto requestStudentDto) {
+		studentMapper.createStudent(requestStudentDto);
 	}
 	
 	public void updateByStudentId(RequestStudentDto requestStudentDto) {
-		String sql = "update `student` set name=?,birth=?,gender=?,"
-				+ "phone=?,education=? where id=?";
-		
+		studentMapper.updateByStudentId(requestStudentDto);
 	}
 	
 	public void deleteByStudentId(RequestStudentDto requestStudentDto) {
-		String sql = "delete from student where id=?";
+		studentMapper.deleteByStudentId(requestStudentDto);
 	}
 	
 	public ResponseStudentDto selectOneById(RequestStudentDto requestStudentDto) {
 	    
-		ResponseStudentDto responseStudentDto = new ResponseStudentDto();
-		
-		String sql = "select * from student where id=?";
+		ResponseStudentDto responseStudentDto = studentMapper.selectOneById(requestStudentDto);
 	    
 		return responseStudentDto;
 	}
 	
 	public List<ResponseStudentDto> selectOneByName(RequestStudentDto requestStudentDto) {
-	    String sql = "select * from student where name=?";
 	    
-	    List<ResponseStudentDto>resStudentDtoList = new ArrayList<>();
+	    List<ResponseStudentDto>resStudentDtoList = 
+	    		studentMapper.selectOneByName(requestStudentDto);
 		
 		return resStudentDtoList;
 	}
 	
 	public List<ResponseStudentDto> selectAll() {
 	    
-	    String sql = "select * from student";
-	    List<ResponseStudentDto>resStudentDtoList = new ArrayList<>();
+	    List<ResponseStudentDto>resStudentDtoList = 
+	    		studentMapper.selectAll();
 		
 		return resStudentDtoList;
 	}
 	
 	public ResponseStudentDto selectLastRow() {
-		ResponseStudentDto responseStudentDto = new ResponseStudentDto();
-		
-		String sql = "SELECT `id` FROM `student` ORDER BY `id` DESC LIMIT 1";
+		ResponseStudentDto responseStudentDto = studentMapper.selectLastRow();
 		
 		return responseStudentDto;
 	}
